@@ -1,4 +1,3 @@
-// Configuración de Generaciones
 const GEN_RANGES = {
     "1": { min: 1, max: 151 },
     "2": { min: 152, max: 251 },
@@ -8,7 +7,6 @@ const GEN_RANGES = {
     "all": { min: 1, max: 649 }
 };
 
-// Elementos del DOM
 const optionsContainer = document.getElementById('options-container');
 const playBtn = document.getElementById('play-btn');
 const feedback = document.getElementById('feedback');
@@ -22,7 +20,6 @@ let currentTarget = null;
 let hasGuessed = false;
 let cryAudio = null;
 
-// Obtener nombre en español
 async function getPokemonInfo(id) {
     const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
     const data = await res.json();
@@ -31,18 +28,20 @@ async function getPokemonInfo(id) {
     const dataSpecie = await resSpecie.json();
     const spanishName = dataSpecie.names.find(n => n.language.name === "es").name;
 
-    return { id, name: spanishName, cry: data.cries.latest };
+    return { 
+        id, 
+        name: spanishName, 
+        cry: data.cries.latest,
+        sprite: data.sprites.front_default // Nueva propiedad de imagen
+    };
 }
 
 async function startNewRound() {
     hasGuessed = false;
     feedback.classList.add('hidden');
-    optionsContainer.innerHTML = '<p style="color:white">Buscando Pokémon...</p>';
+    optionsContainer.innerHTML = '<p style="color:white">Cargando datos...</p>';
     
-    const selectedGen = genSelect.value;
-    const { min, max } = GEN_RANGES[selectedGen];
-
-    // Generar 5 IDs únicos
+    const { min, max } = GEN_RANGES[genSelect.value];
     const ids = [];
     while(ids.length < 5) {
         const id = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -55,7 +54,7 @@ async function startNewRound() {
         cryAudio = new Audio(currentTarget.cry);
         renderOptions(pokemons);
     } catch (error) {
-        optionsContainer.innerHTML = '<p style="color:white">Error de conexión. Reintenta.</p>';
+        optionsContainer.innerHTML = '<p style="color:white">Error al conectar con PokeAPI</p>';
     }
 }
 
@@ -63,8 +62,21 @@ function renderOptions(pokemons) {
     optionsContainer.innerHTML = '';
     pokemons.forEach(pkmn => {
         const btn = document.createElement('button');
-        btn.innerText = pkmn.name;
         btn.className = 'option-btn';
+        
+        // Crear imagen
+        const img = document.createElement('img');
+        img.src = pkmn.sprite;
+        img.className = 'pkmn-icon';
+        img.alt = pkmn.name;
+
+        // Crear texto del nombre
+        const span = document.createElement('span');
+        span.innerText = pkmn.name;
+
+        btn.appendChild(img);
+        btn.appendChild(span);
+        
         btn.onclick = () => handleGuess(pkmn.id, btn);
         optionsContainer.appendChild(btn);
     });
@@ -87,16 +99,17 @@ function handleGuess(selectedId, btnElement) {
         sndError.play();
         
         allButtons.forEach(btn => {
-            if(btn.innerText === currentTarget.name) btn.classList.add('correct');
+            // Buscamos el botón correcto por el nombre dentro del span
+            if(btn.querySelector('span').innerText === currentTarget.name) {
+                btn.classList.add('correct');
+            }
         });
     }
     feedback.classList.remove('hidden');
 }
 
-// Eventos
 playBtn.onclick = () => cryAudio?.play();
 nextBtn.onclick = startNewRound;
-genSelect.onchange = startNewRound; // Reinicia al cambiar generación
+genSelect.onchange = startNewRound;
 
-// Iniciar
 startNewRound();

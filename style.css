@@ -1,0 +1,109 @@
+:root {
+    --poke-red: #ee1515;
+    --poke-dark-red: #b91111;
+    --poke-blue: #2a92d0;
+    --poke-black: #222222;
+    --poke-white: #f0f0f0;
+    --success: #4caf50;
+    --error: #f44336;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+#game-container {
+    background-color: var(--poke-red);
+    width: 90%;
+    max-width: 450px;
+    padding: 25px;
+    border-radius: 20px;
+    border: 8px solid var(--poke-dark-red);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+    text-align: center;
+}
+
+h1 {
+    color: white;
+    text-shadow: 2px 2px var(--poke-black);
+    margin-top: 0;
+}
+
+.filter-container {
+    margin-bottom: 15px;
+    color: white;
+    font-weight: bold;
+}
+
+#gen-select {
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+    background: var(--poke-black);
+    color: white;
+}
+
+.screen {
+    background-color: #222;
+    border: 10px solid #555;
+    border-radius: 10px;
+    padding: 20px;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#play-btn {
+    background-color: var(--poke-blue);
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    font-size: 1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: transform 0.1s;
+}
+
+#play-btn:hover { background-color: #3aa2e0; }
+#play-btn:active { transform: scale(0.95); }
+
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.option-btn {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.option-btn.correct { background-color: var(--success) !important; color: white; }
+.option-btn.incorrect { background-color: var(--error) !important; color: white; }
+.option-btn:disabled { opacity: 0.8; cursor: not-allowed; }
+
+#feedback { margin-top: 15px; color: white; }
+.hidden { display: none; }
+
+#next-btn {
+    background: white;
+    color: var(--poke-red);
+    border: none;
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+}

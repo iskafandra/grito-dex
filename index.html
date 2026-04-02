@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grito-Dex | ¿Quién es ese Pokémon?</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <h1>GRITO-DEX</h1>
+        
+        <div class="filter-container">
+            <label for="gen-select">Generación:</label>
+            <select id="gen-select">
+                <option value="1">Gen 1 (Kanto)</option>
+                <option value="2">Gen 2 (Johto)</option>
+                <option value="3">Gen 3 (Hoenn)</option>
+                <option value="4">Gen 4 (Sinnoh)</option>
+                <option value="5">Gen 5 (Unova)</option>
+                <option value="all">Todas</option>
+            </select>
+        </div>
+
+        <div class="screen">
+            <div id="audio-section">
+                <button id="play-btn">🔊 ESCUCHAR GRITO</button>
+            </div>
+            
+            <div id="options-container" class="options-grid">
+                </div>
+        </div>
+
+        <div id="feedback" class="hidden">
+            <p id="message"></p>
+            <button id="next-btn">SIGUIENTE RONDA</button>
+        </div>
+    </div>
+
+    <audio id="snd-success" src="https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3"></audio>
+    <audio id="snd-error" src="https://assets.mixkit.co/active_storage/sfx/2003/2003-preview.mp3"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
